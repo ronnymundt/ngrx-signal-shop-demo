@@ -1,0 +1,97 @@
+<!-- action bar -->
+<section class="action-bar">
+  <!-- search input -->
+  <div class="input-group">
+    <input
+        type="text"
+        class="form-control"
+        placeholder="Produkt suchen..."
+        [formControl]="txbSearch"
+        (keyup.enter)="onSearchClick()"
+    />
+    <div class="input-group-append">
+      <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="onSearchClick()"
+      >
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </div>
+  <!-- toggle order button -->
+  <button
+      class="btn btn-outline-secondary"
+      type="button"
+      (click)="onToggleOrderClick()"
+  >
+    <i class="bi bi-arrow-down-up"></i>
+  </button>
+  <!-- cart button -->
+  <button
+      class="btn btn-outline-secondary cart"
+      type="button"
+      routerLink="/cart"
+  >
+    <i class="bi bi-cart-fill"></i>
+    @if (selectCartCount() > 0) {
+      <span class="badge bg-danger">{{ selectCartCount() }}</span>
+    }
+  </button>
+</section>
+<!-- product list -->
+<section class="products">
+  @for (p of selectProducts().products; track p.id) {
+    <article class="card text-center">
+      <img class="card-img" [src]="p.thumbnail" [alt]="p.title" />
+      <div class="card-body">
+        <h6 class="card-title">{{ p.title }}</h6>
+        <p class="card-text">{{ p.price | currency: "CHF" }}</p>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onAddToCartClick(p)"
+        >
+          <i class="bi bi-cart-fill me-2"></i>
+          <span>Add to cart</span>
+        </button>
+      </div>
+    </article>
+  }
+</section>
+<!-- paginator -->
+<section class="paginator">
+  <nav>
+    <ul class="pagination">
+      <li class="page-item">
+        <a
+          class="page-link"
+          (click)="onPagingPrevNextClick('prev')"
+          [ngClass]="{ disabled: selectProducts().isPrevDisabled }"
+        >
+          <i class="bi bi-chevron-left"></i>
+        </a>
+      </li>
+      @for (c of selectProducts().paginator; track c) {
+        <li class="page-item">
+          <a
+            class="page-link"
+            (click)="onPagingClick(c)"
+            [ngClass]="{ active: c === selectProducts().currentPage }"
+          >
+            {{ c }}
+          </a>
+        </li>
+      }
+      <li class="page-item">
+        <a
+          class="page-link"
+          (click)="onPagingPrevNextClick('next')"
+          [ngClass]="{ disabled: selectProducts().isNextDisabled }"
+        >
+          <i class="bi bi-chevron-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</section>

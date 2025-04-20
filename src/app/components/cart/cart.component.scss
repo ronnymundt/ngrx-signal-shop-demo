@@ -1,0 +1,17 @@
+section {
+    &.product-list {
+        table {
+            width: 100%; 
+
+            .action {
+                width: 58px;
+            }
+        }        
+    }
+
+    &.total-price {
+        display: grid;
+        grid-template-columns: 1fr auto;
+    }
+}
+

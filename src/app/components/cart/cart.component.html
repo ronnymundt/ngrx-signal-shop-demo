@@ -1,0 +1,48 @@
+<!-- header -->
+<section class="header">
+  <h3>Warenkorb</h3>
+  <hr />
+</section>
+<!-- product list -->
+<section class="product-list">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Bezeichnung</th>
+        <th>Anzahl</th>
+        <th>Preis</th>
+        <th>Summe</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of selectCartViewModel().cart; track item.id; let i = $index) {
+        <tr>
+          <td>{{ item.title }}</td>
+          <td>{{ item.amount }}</td>
+          <td>{{ item.price | currency: "CHF" }}</td>
+          <td>{{ item.total | currency: "CHF" }}</td>
+          <td class="action">
+            <i
+              class="bi bi-x-lg btn btn-light"
+              (click)="onRemoveProductClick(item.id)"
+            ></i>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>
+<!-- price total -->
+<section class="total-price">
+  <span>Total</span>
+  <span>{{ selectCartViewModel().totalPrice | currency: "CHF" }}</span>
+</section>
+<hr />
+<!-- back to products -->
+<section>
+  <button class="btn btn-primary" type="button" routerLink="..">Zurück</button>
+</section>
+<!--<section class="checkout">
+  <button class="btn btn-primary" type="button">Bezahlen</button>
+</section>-->
